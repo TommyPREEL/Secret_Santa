@@ -1,0 +1,10 @@
+Santa Secret
+
+
+-> Un utilisateur uniquement se sert de l'application (l'organisateur de l'évenement)
+-> On entre la liste des personnes qui vont participer via un formulaire (mail obligatoire)
+-> Shuffle des personnes, chacun à un personne unique associé
+-> Envoi de mails aux personnes avec leur receveur associé
+-> Si l'organisateur veut voir le résultat, il doit cliquer sur un autre bouton
+    -> Envoi d'un mail récapitulatif à l'organisateur
+    -> Création d'un fichier texte récapitulatif
