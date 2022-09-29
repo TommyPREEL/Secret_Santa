@@ -11,19 +11,46 @@
 <body>
     <div class="container">
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Adresse Mail</label>
+            <input type="email" class="form-control" id="mail" placeholder="name@example.com">
+            <label for="mail">Adresse Mail</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="Sarah">
-            <label for="floatingInput">Prénom</label>
+            <input type="text" class="form-control" id="prenom" placeholder="Sarah">
+            <label for="prenom">Prénom</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="CROCHE">
-            <label for="floatingInput">Nom</label>
+            <input type="text" class="form-control" id="nom" placeholder="CROCHE">
+            <label for="nom">Nom</label>
           </div>
       </div>
-    <input type="button" id="testT" value="Test Tommy"></input><br><br>
-    <input type="button" id="testG" value="Test Gaspard"></input>
+    <input type="button" id="testT" value="Test Tommy" style="display:none;"></input><br><br>    
+    <div id="div">
+      <input type="button" id="add" value="Ajouter un participant"></input>
+    </div>
+
+    <div id="div-generate-santa">
+      <input type="button" id="generate-santa" value="Créer le Santa Secret !"></input>
+    </div>
+
+    <form id="form">
+      <div class="field">
+        <label for="Mail">Mail</label>
+        <input type="text" name="Mail" id="Mail">
+      </div>
+      <div class="field">
+        <label for="Random_santa">Random_santa</label>
+        <input type="text" name="Random_santa" id="Random_santa">
+      </div>
+      
+    
+      <input type="submit" id="button" value="Send Email" >
+    </form>
+    
+    <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+      emailjs.init('lRTn2NXkqJGfsYYCX')
+    </script>
 </body>
 </html>
