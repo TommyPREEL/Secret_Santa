@@ -1,78 +1,13 @@
 import {Participant} from './participant.js'
+import {shuffleArray, mailIsValid, download} from './functions.js'
+
 
 const btAdd = document.getElementById("add")
-const btT = document.getElementById("testT")
 const btGenerateSanta = document.getElementById("generate-santa")
 const btTestMail = document.getElementById("test-mail")
 let nbLine = 0
 let tab_participants = []
-
-
-// Fonction pour mélanger un tableau
- function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      let temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-  }
-
-  function mailIsValid(mail){
-    let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,}');
-    let check = false;
-    if(regex.test(mail)){
-        check = true;
-    }
-    return check
-}
-
-/*
-btT.addEventListener("click", () => {
-    let participant1 = new Participant("JeanFILE@test.fr", "Jean", "FILE", null)
-    let participant2 = new Participant("JackHOST@test.fr", "Jack", "HOST", null)
-    let participant3 = new Participant("AnnaCONDA@test.fr", "Anna", "CONDA", null)
-    let participant4 = new Participant("SarahCROCHE@test.fr", "Sarah", "CROCHE", null)
-    let participant5 = new Participant("SachaTOUILLE@test.fr", "Sacha", "TOUILLE", null)
-
-    let participants_shuffle = []
-    participants_shuffle.push(participant1, participant2, participant3, participant4, participant5)
-
-    let participants_no_shuffle = []
-    participants_no_shuffle.push(participant1, participant2, participant3, participant4, participant5)
-
-    shuffleArray(participants_shuffle)
-    let i = 0
-
-    let tab_personne_deja_associee = []
-
-    for(let participant of participants_no_shuffle){
-    i = 0
-        do{
-            if(participant != participants_shuffle[i]){
-                if(!(tab_personne_deja_associee.indexOf(participants_shuffle[i]) !== -1)){
-                    participant.personne_associee = participants_shuffle[i]
-                    tab_personne_deja_associee.push(participants_shuffle[i])
-                }
-            }
-            i++;
-        }while(participant.personne_associee == null && i<=20)
-    }
-    console.log(participants_shuffle)
-})
-*/
-
-
-
-
-
-// const test = document.getElementById("t")
-// test.addEventListener("click", () => {
-// })
-
-
-
-
+let tab_personne_deja_associee = []
 
 
 // Ajouter un participant
@@ -81,62 +16,111 @@ btAdd.addEventListener("click", () => {
     const prenom = document.getElementById("prenom")
     const nom = document.getElementById("nom")
     if(mail.value != "" && prenom.value != "" && nom.value != "" && mailIsValid(mail.value)){
-        let d = document.getElementById('div-add');
-        let p = document.createElement("div")
-        p.setAttribute("id", nbLine)
-        p.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
-        p.innerText += `${mail.value},${prenom.value},${nom.value}`
-        d.appendChild(p)
         let participant = new Participant(`${mail.value}`, `${prenom.value}`, `${nom.value}`, null)
-        tab_participants.push(participant)
-        nbLine++
-        mail.value = ""
-        prenom.value = ""
-        nom.value = ""
-        // Creer une croix pour supprimer un participant
-        // <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        let croix = document.createElement("button")
-        croix.setAttribute("id", nbLine)
-        croix.setAttribute("class", "btn-close")
-        croix.addEventListener("click", () => {
-            p.remove()
-            let index = tab_participants.indexOf(participant)
-            tab_participants.splice(index, 1)
-        })
-        p.appendChild(croix)
-        console.log(tab_participants)
+        let check_mail = true;
+        for(let mail_participant of tab_participants){
+            if(mail_participant.email == mail.value){
+                check_mail = false;
+            }
+        }
+        if(tab_participants.indexOf(participant == -1) && check_mail == true){
+            let d = document.getElementById('div-add');
+            let p = document.createElement("div")
+            p.setAttribute("id", nbLine)
+            p.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
+            p.innerText += `${mail.value},${prenom.value},${nom.value}`
+            d.appendChild(p)
+            tab_participants.push(participant)
+            nbLine++
+            mail.value = ""
+            prenom.value = ""
+            nom.value = ""
+            let croix = document.createElement("button")
+            croix.setAttribute("id", nbLine)
+            croix.setAttribute("class", "btn-close")
+            croix.addEventListener("click", () => {
+                let index_p = tab_participants.indexOf(participant)
+                tab_participants.splice(index_p, 1)
+                p.remove()
+                for(let une_personne of tab_participants){
+                    une_personne.personne_associee = null
+                }
+            })
+            p.appendChild(croix)
+        }else{
+            if(!check_mail){
+                alert("Mail déjà utilisée !")
+            }
+
+        }
     }
 })
 
 
 // Generer le Santa Secret
 btGenerateSanta.addEventListener("click", () => {
-
-    let participants_shuffle = []
-    participants_shuffle = [...tab_participants]
-
-    let participants_no_shuffle = []
-    participants_no_shuffle = [...tab_participants]
-
-    shuffleArray(participants_shuffle)
-    let i = 0
-
-    let tab_personne_deja_associee = []
-
-    for(let participant of participants_no_shuffle){
-    i = 0
-        do{
-            if(participant != participants_shuffle[i]){
-                if(!(tab_personne_deja_associee.indexOf(participants_shuffle[i]) !== -1)){
-                    participant.personne_associee = participants_shuffle[i]
-                    tab_personne_deja_associee.push(participants_shuffle[i])
+    if(tab_participants.length > 1){
+        console.log(tab_participants)
+        let participants_shuffle = []
+        participants_shuffle = [...tab_participants]
+    
+        let participants_no_shuffle = []
+        participants_no_shuffle = [...tab_participants]
+    
+        tab_personne_deja_associee = []
+    
+        shuffleArray(participants_shuffle)
+        let i = 0
+    
+        for(let participant of participants_no_shuffle){
+        i = 0
+            do{
+                if(participant != participants_shuffle[i]){
+                    if(tab_personne_deja_associee.indexOf(participants_shuffle[i]) === -1){
+                        participant.personne_associee = participants_shuffle[i]
+                        tab_personne_deja_associee.push(participants_shuffle[i])
+                        console.log(participant.nom + " doit faire un cadeau à " + participant.personne_associee.nom)
+                    }
                 }
-            }
-            i++;
-        }while(participant.personne_associee == null && i<=1000)
+                i++;
+            }while(participant.personne_associee == null)
+        }
+        let text_file = ""
+        for(let personne of participants_no_shuffle){
+            text_file += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}\n`
+            //text_spoiler += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}<br>`
+        }
+        const file = new File([text_file], 'secret_santa.txt', {
+            type: 'text/plain',
+          })
+        let result = confirm("Voulez-vous télécharger le résultat du Santa Secret ?") 
+        if(result){
+            download(file)
+        }
+
+        let div_spoiler = document.getElementById('div-spoiler');
+        let spoiler_button = document.createElement("button")
+        spoiler_button.setAttribute("class", "btn btn-success")
+        spoiler_button.innerHTML = "Spoiler Résultat"
+        div_spoiler.appendChild(spoiler_button)
+        // Faire afficher le santa secret dans un spoiler
+        for(let un_participant of tab_participants){
+            let div = document.createElement("div")
+            div.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
+            div.innerText += `${un_participant.nom} ${un_participant.prenom} => ${un_participant.personne_associee.nom} ${un_participant.personne_associee.prenom}<br>`
+            div_spoiler.appendChild(txt_spoiler)
+        }
+
+        // Suppression des attributions de personnes
+        for(let une_personne of tab_participants){
+            une_personne.personne_associee = null
+        }
+        
+    }else{
+        alert("Pas assez de participants !")
     }
-    console.log(participants_shuffle)
-    // Faire afficher le santa secret
+
+    
 })
 
 
