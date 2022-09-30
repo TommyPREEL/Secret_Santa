@@ -60,7 +60,10 @@ btAdd.addEventListener("click", () => {
 // Generer le Santa Secret
 btGenerateSanta.addEventListener("click", () => {
     if(tab_participants.length > 1){
-        console.log(tab_participants)
+        // Suppression des attributions de personnes
+        for(let une_personne of tab_participants){
+            une_personne.personne_associee = null
+        }
         let participants_shuffle = []
         participants_shuffle = [...tab_participants]
     
@@ -101,20 +104,19 @@ btGenerateSanta.addEventListener("click", () => {
         let div_spoiler = document.getElementById('div-spoiler');
         let spoiler_button = document.createElement("button")
         spoiler_button.setAttribute("class", "btn btn-success")
+        spoiler_button.setAttribute("id", "spoiler-button")
         spoiler_button.innerHTML = "Spoiler Résultat"
         div_spoiler.appendChild(spoiler_button)
-        // Faire afficher le santa secret dans un spoiler
-        for(let un_participant of tab_participants){
-            let div = document.createElement("div")
-            div.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
-            div.innerText += `${un_participant.nom} ${un_participant.prenom} => ${un_participant.personne_associee.nom} ${un_participant.personne_associee.prenom}<br>`
-            div_spoiler.appendChild(txt_spoiler)
-        }
-
-        // Suppression des attributions de personnes
-        for(let une_personne of tab_participants){
-            une_personne.personne_associee = null
-        }
+        //elem_div_spoiler = document.getElementById('spoiler-button'); (eventuellement spoiler_button)
+        spoiler_button.addEventListener("click", () =>{
+            // Faire afficher le santa secret dans un spoiler
+            for(let un_participant of tab_participants){
+                let div = document.createElement("div")
+                div.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
+                div.innerText = `${un_participant.nom} ${un_participant.prenom} => ${un_participant.personne_associee.nom} ${un_participant.personne_associee.prenom}`
+                div_spoiler.appendChild(div)
+            }
+        })
         
     }else{
         alert("Pas assez de participants !")
