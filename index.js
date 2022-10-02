@@ -50,6 +50,9 @@ btAdd.addEventListener("click", () => {
         }else{
             if(!check_mail){
                 alert("Mail déjà utilisée !")
+                mail.value = ""
+                prenom.value = ""
+                nom.value = ""
             }
 
         }
@@ -92,7 +95,45 @@ btGenerateSanta.addEventListener("click", () => {
         for(let personne of participants_no_shuffle){
             text_file += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}\n`
             //text_spoiler += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}<br>`
+            console.log(personne.nom)
+            console.log(personne.prenom)
+            console.log(personne.personne_associee.nom)
+            console.log(personne.personne_associee.prenom)
+
+            const btn = document.getElementById('button');
+            emailjs.sendForm(serviceID, templateID, this)
+
+
+
+
+            
+
+            document.getElementById('form')
+            .addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            btn.value = 'Sending...';
+
+            const serviceID = 'default_service';
+            const templateID = 'template_eb32wwl';
+
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                btn.value = 'Send Email';
+                alert('Sent!');
+                }, (err) => {
+                btn.value = 'Send Email';
+                alert(JSON.stringify(err));
+                });
+            });
+
+
+
+
+
+
         }
+        
         const file = new File([text_file], 'secret_santa.txt', {
             type: 'text/plain',
           })
@@ -117,7 +158,6 @@ btGenerateSanta.addEventListener("click", () => {
                 div_spoiler.appendChild(div)
             }
         })
-        
     }else{
         alert("Pas assez de participants !")
     }
