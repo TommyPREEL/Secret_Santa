@@ -8,8 +8,9 @@ export function shuffleArray(array) {
     }
   }
 
+// Fonction pour vérifier la validité d'un mail
 export function mailIsValid(mail){
-    let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,}');
+    let regex = new RegExp('[a-zA-Z-0-9]+@[a-zA-Z]+.[a-zA-Z-0-9]{2,}$');
     let check = false;
     if(regex.test(mail)){
         check = true;
@@ -17,6 +18,7 @@ export function mailIsValid(mail){
     return check
 }
 
+// Fonction pour télécharger un fichier
 export function download(file) {
     const link = document.createElement('a')
     const url = URL.createObjectURL(file)

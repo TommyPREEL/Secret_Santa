@@ -8,6 +8,7 @@ const btTestMail = document.getElementById("test-mail")
 let nbLine = 0
 let tab_participants = []
 let tab_personne_deja_associee = []
+let debug_spoiler = 0
 
 
 // Ajouter un participant
@@ -94,12 +95,7 @@ btGenerateSanta.addEventListener("click", () => {
         let text_file = ""
         for(let personne of participants_no_shuffle){
             text_file += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}\n`
-            //text_spoiler += `${personne.nom} ${personne.prenom} => ${personne.personne_associee.nom} ${personne.personne_associee.prenom}<br>`
-            console.log(personne.nom)
-            console.log(personne.prenom)
-            console.log(personne.personne_associee.nom)
-            console.log(personne.personne_associee.prenom)
-
+/*
             const btn = document.getElementById('button');
             emailjs.sendForm(serviceID, templateID, this)
 
@@ -128,8 +124,7 @@ btGenerateSanta.addEventListener("click", () => {
             });
 
 
-
-
+*/
 
 
         }
@@ -151,11 +146,14 @@ btGenerateSanta.addEventListener("click", () => {
         //elem_div_spoiler = document.getElementById('spoiler-button'); (eventuellement spoiler_button)
         spoiler_button.addEventListener("click", () =>{
             // Faire afficher le santa secret dans un spoiler
-            for(let un_participant of tab_participants){
-                let div = document.createElement("div")
-                div.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
-                div.innerText = `${un_participant.nom} ${un_participant.prenom} => ${un_participant.personne_associee.nom} ${un_participant.personne_associee.prenom}`
-                div_spoiler.appendChild(div)
+            if(debug_spoiler == 0){
+                for(let un_participant of tab_participants){
+                    let div = document.createElement("div")
+                    div.setAttribute("class", "alert alert-secondary alert-dismissible fade show")
+                    div.innerText = `${un_participant.nom} ${un_participant.prenom} => ${un_participant.personne_associee.nom} ${un_participant.personne_associee.prenom}`
+                    div_spoiler.appendChild(div)
+                }
+                debug_spoiler = 1
             }
         })
     }else{

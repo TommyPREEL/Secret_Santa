@@ -6,11 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secret Santa</title>
     <script type="module" src="index.js"></script>
-    <script type="module" src="test.js"></script>
+    <script type="module" src="test/test.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
+  <img src="/media/img/flocons.png" class="img-flocons">
+  <div class="title">
+  <h1> Générateur de Père Noël Secret<img class="img-santa" src="/media/img/santa.png"> </h1>
+  </div>
+  <div class="main">
+  <div class="card">
+    <div class="card-body">
     <div class="container">
+      <h1>Entrez un participant</h1>
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="mail" placeholder="name@example.com">
             <label for="mail">Adresse Mail</label>
@@ -24,15 +34,24 @@
             <label for="nom">Nom</label>
           </div>
       </div>
-
-      <input type="button" id="add" value="Ajouter un participant"></input>
+        <div class="bouton">
+          <input type="button" class="button" id="add" value="Ajouter un participant"></input>
+       
+        </div>
+  
+      </div>
     </div>
+  </div>
 
-    <div id="div-generate-santa">
-      <input type="button" id="generate-santa" value="Créer le Santa Secret !"></input>
-    </div>
+    <br>
+        <div id="div-generate-santa">
+          <div class="bouton">
+            <input type="button" class="button" id="generate-santa" value="Générer le Père Noël secret !"></input>
+          </div>
+        </div>
 
-    <form id="form">
+  
+    <form id="form" style="display:none">
       <div class="form">
         <label for="mail">mail</label>
         <input type="text" name="mail" id="mail">
@@ -58,5 +77,6 @@
 
   <div id="div-spoiler">
   </div>
+  
 </body>
 </html>
