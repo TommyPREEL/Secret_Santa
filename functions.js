@@ -1,5 +1,3 @@
-//import { saveAs } from 'file-saver';
-
 // Fonction pour mélanger un tableau
 export function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -18,12 +16,6 @@ export function mailIsValid(mail){
     }
     return check
 }
-
-/*export function saveStaticDataToFile() {
-    var blob = new Blob(["Welcome to Websparrow.org."],
-        { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "static.txt");
-}*/
 
 export function download(file) {
     const link = document.createElement('a')
