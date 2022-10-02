@@ -127,3 +127,7 @@ html, body {
   margin: auto;
     width: 80%;
 }
+.div-spoiler{
+    z-index:1;
+    position: absolute;
+}
